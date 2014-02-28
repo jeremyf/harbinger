@@ -2,7 +2,8 @@ require 'fast_helper'
 require 'harbinger'
 
 describe Harbinger do
-  Given(:user) { User.new.tap {|u| u.username = 'a username'} }
+  Given(:user) { User.new(username: 'a username') }
+  Given(:request) { Request.new(path: '/path/to/awesome', params: {hello: :world}, user_agent: "Ruby") }
   context '.reporter_for' do
     When(:reporter) { Harbinger.reporter_for(user) }
     Then { expect(reporter).to be_an_instance_of(Harbinger::Reporters::UserReporter) }
@@ -10,7 +11,15 @@ describe Harbinger do
 
   context '.call' do
     Given(:message) { Harbinger::Message.new }
-    When { Harbinger.call(contexts: user, message: message) }
-    Then { expect(message.attributes).to eq({'user.username' => [user.username] }) }
+    When { Harbinger.call(contexts: [user, request], message: message) }
+    Then { expect(message.attributes).to eq(
+             {
+               'user.username' => [user.username],
+               'request.path' => [request.path],
+               'request.params' => [request.params],
+               'request.user_agent' => [request.user_agent],
+             }
+           )
+           }
   end
 end

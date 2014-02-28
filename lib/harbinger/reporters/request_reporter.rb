@@ -10,7 +10,9 @@ module Harbinger
 
       def accept(message)
         method_names.each do |method_name|
-          message.append('request', method_name, request.public_send(method_name))
+          if request.respond_to?(method_name)
+            message.append('request', method_name, request.public_send(method_name))
+          end
         end
       end
     end
