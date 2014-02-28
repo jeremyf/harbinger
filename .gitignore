@@ -16,3 +16,5 @@ test/tmp
 spec/tmp
 test/version_tmp
 tmp
+tags
+.tags*
