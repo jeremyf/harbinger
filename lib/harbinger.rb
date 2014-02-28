@@ -7,4 +7,13 @@ module Harbinger
   def reporter_for(context)
     Reporters.find_for(context)
   end
+
+  def call(options = {})
+    contexts = Array(options.fetch(:contexts)).flatten.compact
+    message = options.fetch(:message) { Message.new }
+    contexts.each do |context|
+      reporter_for(context).accept(message)
+    end
+    message
+  end
 end
