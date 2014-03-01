@@ -5,17 +5,15 @@ module Harbinger
       if context.respond_to?(:to_harbinger_reporter)
         context.to_harbinger_reporter
       else
-        begin
-          reporter_class_name = reporter_name_for_instance(context)
-          if const_defined?(reporter_class_name)
-            const_get(reporter_class_name).new(context)
-          else
-            NullReporter.new(context)
-          end
-        rescue NameError
+        reporter_class_name = reporter_name_for_instance(context)
+        if const_defined?(reporter_class_name)
+          const_get(reporter_class_name).new(context)
+        else
           NullReporter.new(context)
         end
       end
+    rescue StandardError
+      NullReporter.new(context)
     end
 
     def reporter_name_for_instance(context)

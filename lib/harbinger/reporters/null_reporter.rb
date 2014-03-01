@@ -7,6 +7,7 @@ module Harbinger::Reporters
     end
 
     def accept(message)
+      message.append('nil', context.class.to_s, context.inspect)
     end
 
   end
