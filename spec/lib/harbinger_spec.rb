@@ -22,4 +22,11 @@ describe Harbinger do
            )
            }
   end
+
+  context '.deliver' do
+    Given(:message) { Harbinger::Message.new }
+    Given(:channel) { double('Channel', deliver: true) }
+    When { Harbinger.deliver(message, channels: channel) }
+    Then { expect(channel).to have_received(:deliver).with(message) }
+  end
 end

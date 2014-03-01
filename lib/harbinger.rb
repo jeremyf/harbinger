@@ -15,4 +15,9 @@ module Harbinger
     contexts.each { |context| reporter_for(context).accept(message) }
     message
   end
+
+  def deliver(message, options = {})
+    channels = Array(options.fetch(:channels)).flatten.compact
+    channels.each {|channel| channel.deliver(message) }
+  end
 end
