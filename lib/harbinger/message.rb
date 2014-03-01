@@ -1,5 +1,6 @@
 module Harbinger
   class Message
+    attr_reader :attributes
     def initialize
       @attributes = {}
     end
@@ -10,6 +11,5 @@ module Harbinger
       @attributes[composite_key] << value
     end
 
-    attr_reader :attributes
   end
 end

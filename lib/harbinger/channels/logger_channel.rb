@@ -11,9 +11,11 @@ module Harbinger::Channels
     def default_logger
       Harbinger.logger
     end
+    private_class_method :default_logger
 
     def default_severity
       5 # ::Logger::UNKNOWN
     end
+    private_class_method :default_severity
   end
 end
