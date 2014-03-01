@@ -4,8 +4,12 @@ module Harbinger::Channels
     def deliver(message, options = {})
       logger = options.fetch(:logger) { default_logger }
       severity = options.fetch(:severity) { default_severity }
+      log_message = to_log_message(message)
+      logger.add(severity, log_message)
+    end
 
-      logger.add(severity, message.to_s)
+    def to_log_message(message)
+      message.attributes.to_s
     end
 
     def default_logger
