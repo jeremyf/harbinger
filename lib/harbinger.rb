@@ -11,9 +11,8 @@ module Harbinger
   def call(options = {})
     contexts = Array(options.fetch(:contexts)).flatten.compact
     message = options.fetch(:message) { Message.new }
-    contexts.each do |context|
-      reporter_for(context).accept(message)
-    end
+
+    contexts.each { |context| reporter_for(context).accept(message) }
     message
   end
 end
