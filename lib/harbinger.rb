@@ -19,5 +19,6 @@ module Harbinger
   def deliver(message, options = {})
     channels = Array(options.fetch(:channels)).flatten.compact
     channels.each {|channel| channel.deliver(message) }
+    true
   end
 end
