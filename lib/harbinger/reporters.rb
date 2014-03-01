@@ -25,4 +25,5 @@ end
 
 require "harbinger/reporters/user_reporter"
 require "harbinger/reporters/request_reporter"
+require "harbinger/reporters/exception_reporter"
 require "harbinger/reporters/null_reporter"
