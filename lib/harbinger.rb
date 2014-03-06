@@ -21,4 +21,19 @@ module Harbinger
     channels.each {|channel| channel.deliver(message) }
     true
   end
+
+  def logger
+    @logger ||= default_logger
+  end
+
+
+  def default_logger
+    if defined?(Rails)
+      Rails.logger
+    else
+      require 'logger'
+      ::Logger.new(STDOUT)
+    end
+  end
+  private_class_method :default_logger
 end

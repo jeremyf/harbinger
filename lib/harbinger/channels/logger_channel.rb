@@ -4,13 +4,19 @@ module Harbinger::Channels
     def deliver(message, options = {})
       logger = options.fetch(:logger) { default_logger }
       severity = options.fetch(:severity) { default_severity }
-      log_message = to_log_message(message)
-      logger.add(severity, log_message)
+      read(message) do |line|
+        logger.add(severity, line)
+      end
     end
 
-    def to_log_message(message)
-      message.attributes.to_s
+    def read(message)
+      yield("BEGIN MESSAGE OBJECT ID=#{message.object_id}")
+      message.attributes.each do |key, value|
+        yield("#{key.inspect} => #{value.inspect}")
+      end
+      yield("END MESSAGE OBJECT ID=#{message.object_id}")
     end
+    private_class_method :read
 
     def default_logger
       Harbinger.logger

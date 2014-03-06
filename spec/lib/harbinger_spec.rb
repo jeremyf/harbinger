@@ -29,4 +29,9 @@ describe Harbinger do
     When { Harbinger.deliver(message, channels: channel) }
     Then { expect(channel).to have_received(:deliver).with(message) }
   end
+
+  context '.logger' do
+    Given(:logger) { Harbinger.logger }
+    Then { expect(logger).to respond_to :add }
+  end
 end
