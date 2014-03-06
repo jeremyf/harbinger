@@ -1,6 +1,6 @@
 # Harbinger
 
-TODO: Write a gem description
+A Rails engine for arbitrary message creation and delivery.
 
 ## Installation
 

@@ -6,11 +6,15 @@ require 'harbinger/version'
 Gem::Specification.new do |spec|
   spec.name          = "harbinger"
   spec.version       = Harbinger::VERSION
-  spec.authors       = ["Jeremy Friesen"]
-  spec.email         = ["jeremy.n.friesen@gmail.com"]
-  spec.summary       = %q{An exception tracking Rails engine}
-  spec.description   = %q{An exception tracking Rails engine}
-  spec.homepage      = ""
+  spec.authors       = [
+    "Jeremy Friesen"
+  ]
+  spec.email         = [
+    "jeremy.n.friesen@gmail.com"
+  ]
+  spec.summary       = %q{A Rails engine for arbitrary message creation and delivery.}
+  spec.description   = %q{A Rails engine for arbitrary message creation and delivery.}
+  spec.homepage      = "https://github.com/jeremyf/harbinger"
   spec.license       = "Apache2"
 
   spec.files         = `git ls-files -z`.split("\x0")
