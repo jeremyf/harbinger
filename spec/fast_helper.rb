@@ -33,3 +33,10 @@ shared_examples 'a harbinger reporter' do
   Then { expect(reporter).to respond_to(:accept) }
   And { expect(reporter.method(:accept).arity).to eq(1) }
 end
+
+
+shared_examples "a harbinger channel" do
+  Given(:channel) { described_class }
+  Then { expect(channel).to respond_to(:deliver) }
+  And { expect(channel.method(:deliver).arity).to eq(-2) }
+end

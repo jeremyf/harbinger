@@ -4,6 +4,8 @@ require 'harbinger/channels/logger_channel'
 module Harbinger::Channels
   describe LoggerChannel do
 
+    it_should_behave_like "a harbinger channel"
+
     context '.deliver' do
       Given(:logger_channel) { described_class }
       Given(:logger) { double('Logger', add: true ) }
