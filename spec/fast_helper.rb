@@ -10,20 +10,26 @@ unless defined?(require_dependency)
   end
 end
 
-unless defined?(User)
-  class AttributeBucket
-    def initialize(attributes = {})
-      attributes.each do |key, value|
-        send("#{key}=", value) if respond_to?("#{key}=")
-      end
+class AttributeBucket
+  def initialize(attributes = {})
+    attributes.each do |key, value|
+      send("#{key}=", value) if respond_to?("#{key}=")
     end
   end
+end
 
+class Request < AttributeBucket
+  attr_accessor :path, :params, :user_agent
+end
+
+unless defined?(User)
   class User < AttributeBucket
     attr_accessor :username
   end
+end
 
-  class Request < AttributeBucket
-    attr_accessor :path, :params, :user_agent
-  end
+shared_examples 'a harbinger reporter' do
+  Given(:reporter) { described_class.new(double) }
+  Then { expect(reporter).to respond_to(:accept) }
+  And { expect(reporter.method(:accept).arity).to eq(1) }
 end
