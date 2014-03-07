@@ -4,10 +4,6 @@ require 'harbinger'
 describe Harbinger do
   Given(:user) { User.new(username: 'a username') }
   Given(:request) { Request.new(path: '/path/to/awesome', params: {hello: :world}, user_agent: "Ruby") }
-  context '.reporter_for' do
-    When(:reporter) { Harbinger.reporter_for(user) }
-    Then { expect(reporter).to be_an_instance_of(Harbinger::Reporters::UserReporter) }
-  end
 
   context '.call' do
     Given(:message) { Harbinger::Message.new }

@@ -4,9 +4,6 @@ require "harbinger/reporters"
 
 module Harbinger
   module_function
-  def reporter_for(context)
-    Reporters.find_for(context)
-  end
 
   def call(options = {})
     contexts = Array(options.fetch(:contexts)).flatten.compact
@@ -26,6 +23,10 @@ module Harbinger
     @logger ||= default_logger
   end
 
+  def reporter_for(context)
+    Reporters.find_for(context)
+  end
+  private_class_method :reporter_for
 
   def default_logger
     if defined?(Rails)
