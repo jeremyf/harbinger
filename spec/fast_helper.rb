@@ -30,8 +30,14 @@ end
 
 shared_examples 'a harbinger reporter' do
   Given(:reporter) { described_class.new(double) }
-  Then { expect(reporter).to respond_to(:accept) }
-  And { expect(reporter.method(:accept).arity).to eq(1) }
+  context 'interface' do
+    Then { expect(reporter).to respond_to(:accept) }
+    And { expect(reporter.method(:accept).arity).to eq(1) }
+  end
+  context 'is fault tolerant' do
+    Given(:message) { double(append: false) }
+    When { reporter.accept(message) }
+  end
 end
 
 
