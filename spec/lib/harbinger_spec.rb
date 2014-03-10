@@ -30,4 +30,9 @@ describe Harbinger do
     Given(:logger) { Harbinger.logger }
     Then { expect(logger).to respond_to :add }
   end
+
+  context '.store_message' do
+    Given(:database_storage) { Harbinger.database_storage }
+    Then { expect(database_storage).to respond_to :store_message }
+  end
 end

@@ -19,14 +19,14 @@ module Harbinger
     true
   end
 
-  def logger
-    @logger ||= default_logger
-  end
-
   def reporter_for(context)
     Reporters.find_for(context)
   end
   private_class_method :reporter_for
+
+  def logger
+    @logger ||= default_logger
+  end
 
   def default_logger
     if defined?(Rails)
@@ -37,4 +37,17 @@ module Harbinger
     end
   end
   private_class_method :default_logger
+
+  def database_storage
+    @database_storage ||= default_database_storage
+  end
+
+  def default_database_storage
+    @default_database_storage ||= Class.new {
+      def self.store_message(message)
+      end
+    }
+  end
+  private_class_method :default_database_storage
+
 end
