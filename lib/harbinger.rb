@@ -1,9 +1,23 @@
 require "harbinger/engine" if defined?(Rails)
 require "harbinger/version"
 require "harbinger/reporters"
+require "harbinger/exceptions"
+require "harbinger/configuration"
 
 module Harbinger
   module_function
+  class << self
+    attr_writer :configuration
+
+    def configuration
+      @configuration ||= Configuration.new
+    end
+  end
+
+  module_function
+  def configure
+    yield(configuration)
+  end
 
   def call(options = {})
     contexts = Array(options.fetch(:contexts)).flatten.compact
@@ -19,35 +33,18 @@ module Harbinger
     true
   end
 
+
   def reporter_for(context)
     Reporters.find_for(context)
   end
   private_class_method :reporter_for
 
   def logger
-    @logger ||= default_logger
+    configuration.logger
   end
-
-  def default_logger
-    if defined?(Rails)
-      Rails.logger
-    else
-      require 'logger'
-      ::Logger.new(STDOUT)
-    end
-  end
-  private_class_method :default_logger
 
   def database_storage
-    @database_storage ||= default_database_storage
+    configuration.database_storage
   end
-
-  def default_database_storage
-    @default_database_storage ||= Class.new {
-      def self.store_message(message)
-      end
-    }
-  end
-  private_class_method :default_database_storage
 
 end
