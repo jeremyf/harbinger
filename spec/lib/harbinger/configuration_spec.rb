@@ -4,6 +4,12 @@ require 'harbinger/configuration'
 module Harbinger
   describe Configuration do
     Given(:configuration) { described_class.new }
+
+    context '#default_channels' do
+      When { configuration.default_channels = [:logger, 'Database'] }
+      Then { expect(configuration.default_channels).to eq([:logger, :database])}
+    end
+
     context '#logger' do
       context 'interface' do
         Then { expect(configuration.logger).to respond_to :add }
