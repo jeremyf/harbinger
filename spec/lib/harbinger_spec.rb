@@ -20,9 +20,13 @@ describe Harbinger do
   end
 
   context '.deliver' do
+    before(:each) do
+      Harbinger::Channels.should_receive(:find_for).with(channel_name).and_return(channel)
+    end
     Given(:message) { Harbinger::Message.new }
+    Given(:channel_name) { 'channel_double' }
     Given(:channel) { double('Channel', deliver: true) }
-    When { Harbinger.deliver(message, channels: channel) }
+    When { Harbinger.deliver(message, channels: channel_name) }
     Then { expect(channel).to have_received(:deliver).with(message) }
   end
 

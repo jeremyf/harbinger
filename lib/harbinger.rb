@@ -1,6 +1,7 @@
 require "harbinger/engine" if defined?(Rails)
 require "harbinger/version"
 require "harbinger/reporters"
+require "harbinger/channels"
 require "harbinger/exceptions"
 require "harbinger/configuration"
 
@@ -29,15 +30,19 @@ module Harbinger
 
   def deliver(message, options = {})
     channels = Array(options.fetch(:channels)).flatten.compact
-    channels.each {|channel| channel.deliver(message) }
+    channels.each {|channel_name| channel_for(channel_name).deliver(message) }
     true
   end
-
 
   def reporter_for(context)
     Reporters.find_for(context)
   end
   private_class_method :reporter_for
+
+  def channel_for(name)
+    Channels.find_for(name)
+  end
+  private_class_method :channel_for
 
   def logger
     configuration.logger
