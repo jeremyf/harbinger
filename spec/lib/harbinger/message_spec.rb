@@ -8,9 +8,8 @@ module Harbinger
     When { message.append('container', 'key', 'value')}
     When { message.append('other_container', 'other_key', 'other_value')}
 
-    context '#attributes' do
-      Then { expect(message.attributes).to eq({ 'container.key' => ['value'], 'other_container.other_key' => ['other_value']}) }
-    end
+    Then { expect(message.attributes).to eq({ 'container.key' => ['value'], 'other_container.other_key' => ['other_value']}) }
+    And { expect(message.contexts).to eq(['container', 'other_container']) }
 
   end
 end
