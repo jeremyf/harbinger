@@ -1,3 +1,5 @@
+require 'active_record'
+
 module Harbinger
   class DatabaseChannelMessage < ActiveRecord::Base
     self.table_name = 'harbinger_messages'
