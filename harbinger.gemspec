@@ -26,6 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec-given"
   spec.add_development_dependency "engine_cart"
-  spec.add_development_dependency "rails", "~> 4.0.3"
+  spec.add_development_dependency "rails", "~> 4.0"
 
 end

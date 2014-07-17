@@ -20,3 +20,8 @@ if File.exists?(file)
   puts "Loading #{file} ..." if $DEBUG # `ruby -d` or `bundle -v`
   instance_eval File.read(file)
 end
+
+gem 'sass', '~> 3.2.15'
+gem 'sprockets', '~> 2.11.0'
+
+gem 'rails', '4.1.0'
