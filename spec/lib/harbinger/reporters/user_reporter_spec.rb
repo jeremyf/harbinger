@@ -11,7 +11,7 @@ module Harbinger::Reporters
       Given(:message) { double('Message', append: true) }
       Given(:reporter) { described_class.new(user) }
       When { reporter.accept(message) }
-      Then { message.should have_received(:append).with('user', 'username', user.username) }
+      Then { expect(message).to have_received(:append).with('user', 'username', user.username) }
     end
   end
 end

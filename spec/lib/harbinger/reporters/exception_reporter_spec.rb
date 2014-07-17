@@ -15,9 +15,9 @@ module Harbinger::Reporters
 
       When { reporter.accept(message) }
 
-      Then { message.should have_received(:append).with('exception', 'class_name', exception.class.to_s) }
-      And { message.should have_received(:append).with('exception', 'backtrace', [].join("\n")) }
-      And { message.should have_received(:append).with('exception', 'message', exception.message) }
+      Then { expect(message).to have_received(:append).with('exception', 'class_name', exception.class.to_s) }
+      And { expect(message).to have_received(:append).with('exception', 'backtrace', [].join("\n")) }
+      And { expect(message).to have_received(:append).with('exception', 'message', exception.message) }
 
     end
   end

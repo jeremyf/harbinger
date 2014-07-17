@@ -11,7 +11,7 @@ module Harbinger::Channels
       Given(:storage) { double('Database', store_message: true ) }
       Given(:message) { double("Message") }
       When { database_channel.deliver(message, storage: storage) }
-      Then { storage.should have_received(:store_message).with(message) }
+      Then { expect(storage).to have_received(:store_message).with(message) }
     end
 
   end

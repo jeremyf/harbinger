@@ -14,7 +14,7 @@ module Harbinger::Reporters
 
       When { reporter.accept(message) }
 
-      Then { message.should have_received(:append).with('nil', context.class.to_s, context.inspect) }
+      Then { expect(message).to have_received(:append).with('nil', context.class.to_s, context.inspect) }
 
     end
   end
