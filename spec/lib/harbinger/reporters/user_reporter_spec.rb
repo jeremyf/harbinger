@@ -1,4 +1,4 @@
-require 'fast_helper'
+require 'spec_fast_helper'
 require 'harbinger/reporters/user_reporter'
 
 module Harbinger::Reporters

@@ -1,4 +1,4 @@
-require 'fast_helper'
+require 'spec_fast_helper'
 require 'harbinger/reporters/exception_reporter'
 
 module Harbinger::Reporters

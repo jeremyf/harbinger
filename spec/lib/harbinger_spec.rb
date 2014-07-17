@@ -1,4 +1,4 @@
-require 'fast_helper'
+require 'spec_fast_helper'
 require 'harbinger'
 
 describe Harbinger do

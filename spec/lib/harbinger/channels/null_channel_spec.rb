@@ -1,4 +1,4 @@
-require 'fast_helper'
+require 'spec_fast_helper'
 require 'harbinger/channels/null_channel'
 
 module Harbinger::Channels
