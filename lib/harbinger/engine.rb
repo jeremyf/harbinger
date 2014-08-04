@@ -1,5 +1,5 @@
 module Harbinger
   class Engine < ::Rails::Engine
-    isolate_namespace Harbinger
+    engine_name 'harbinger'
   end
 end

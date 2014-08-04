@@ -15,5 +15,9 @@ module Harbinger
       template "harbinger_initializer.rb.erb", "config/initializers/harbinger_initializer.rb"
     end
 
+    def install_routes
+      route 'mount Harbinger::Engine => "/harbinger"'
+    end
+
   end
 end
