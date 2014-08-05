@@ -2,11 +2,23 @@ module Harbinger
   class MessagesController < ActionController::Base
 
     def index
-      @messages = DatabaseChannelMessage.search(q: params[:q])
+      messages
     end
 
     def show
-      @message = DatabaseChannelMessage.find(params[:id])
+      message
     end
+
+    protected
+
+    def messages
+      @messages ||= DatabaseChannelMessage.search(q: params[:q])
+    end
+
+    def message
+      @message ||= DatabaseChannelMessage.find(params[:id])
+    end
+
+    helper_method :message, :messages
   end
 end

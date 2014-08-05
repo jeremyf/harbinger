@@ -1,0 +1,24 @@
+<article class="message">
+  <header class="message-header">
+    <h2>Message</h2>
+    <dl>
+      <dt class="term message-contexts-term">Contexts</dt>
+      <% message.contexts.each do |context| %>
+      <dd class="detail message-contexts-detail"><%= context %></dd>
+      <% end %>
+      <dt class="term message-state-term">State</dt>
+      <dd class="detail message-state-detail"><%= message.state %></dd>
+      <dt class="term message-created-at-term">Created at</dt>
+      <dd class="detail message-created-at-detail"><time><%= message.created_at %></time></dd>
+    </dl>
+  </header>
+  <section class="message-body">
+    <dl class="message-elements">
+      <% message.elements.each do |element| %>
+      <% dom_class_prefix = element.key.gsub(/_+/, '-') %>
+      <dt class="term <%= dom_class_prefix %>-term"><%= element.key %></dt>
+      <dd class="detail <%= dom_class_prefix %>-detail"><%= element.value %></dd>
+      <% end %>
+    </dl>
+  </section>
+</article>
