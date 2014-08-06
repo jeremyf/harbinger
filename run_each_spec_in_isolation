@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby -w
+require 'time'
+require 'rake'
+
+FileList['spec/**/*_spec.rb'].sort.select do |fn|
+  puts "rspec #{fn}"
+  system "rspec #{fn}"
+end
+system('rspec')
