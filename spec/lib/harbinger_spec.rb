@@ -1,5 +1,6 @@
 require 'spec_fast_helper'
 require 'harbinger'
+require 'harbinger/message'
 
 describe Harbinger do
   Given(:user) { User.new(username: 'a username') }

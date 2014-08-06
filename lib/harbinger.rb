@@ -22,17 +22,26 @@ module Harbinger
 
   def call(options = {})
     contexts = Array(options.fetch(:contexts)).flatten.compact
-    message = options.fetch(:message) { Message.new }
+    message = options.fetch(:message) { default_message }
 
     contexts.each { |context| reporter_for(context).accept(message) }
     message
   end
 
   def deliver(message, options = {})
-    channels = Array(options.fetch(:channels)).flatten.compact
-    channels.each {|channel_name| channel_for(channel_name).deliver(message) }
+    channels = options.fetch(:channels) { default_channels }
+    Array(channels).flatten.compact.each do |channel_name|
+      channel = channel_for(channel_name)
+      channel.deliver(message)
+    end
     true
   end
+
+  def default_message
+    require 'harbinger/message'
+    Message.new
+  end
+  private_class_method :default_message
 
   def reporter_for(context)
     Reporters.find_for(context)
@@ -43,6 +52,10 @@ module Harbinger
     Channels.find_for(name)
   end
   private_class_method :channel_for
+
+  def default_channels
+    configuration.default_channels
+  end
 
   def logger
     configuration.logger
