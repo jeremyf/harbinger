@@ -22,5 +22,9 @@ module Harbinger
       end
       storage.save!
     end
+
+    def self.search(params = {})
+      all
+    end
   end
 end
