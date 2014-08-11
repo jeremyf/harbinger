@@ -2,7 +2,7 @@ require 'spec_slow_helper'
 require 'harbinger'
 
 module Harbinger
-  describe 'handling a message' do
+  describe 'handling a message', type: :feature do
     let(:message) do
       begin
         {}.fetch(:missing_key)
@@ -15,6 +15,9 @@ module Harbinger
       expect { Harbinger.deliver(message, channels: :database) }.
       to change { DatabaseChannelMessage.count }.
       by(1)
+
+      visit 'harbinger/messages'
+
     end
   end
 end
