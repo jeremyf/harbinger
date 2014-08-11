@@ -23,7 +23,16 @@ require 'action_controller'
 
 require 'active_support/core_ext/hash/reverse_merge'
 
-require 'rspec/rails'
+require 'rspec/core'
+require 'rails/version'
+require 'rspec/rails/extensions'
+require 'rspec/rails/view_rendering'
+require 'rspec/rails/adapters'
+require 'rspec/rails/matchers'
+require 'rspec/rails/fixture_support'
+require 'rspec/rails/example'
+require 'rspec/rails/configuration'
+
 require 'rspec-html-matchers'
 
 ActionController::Base.prepend_view_path(File.expand_path('../../app/views', __FILE__))

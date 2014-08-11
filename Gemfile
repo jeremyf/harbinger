@@ -10,6 +10,7 @@ gemspec path: File.expand_path('..', __FILE__)
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
+gem 'capybara', require: false
 gem 'coveralls', require: false
 if ! ENV['TRAVIS']
   gem 'simplecov', require: false
