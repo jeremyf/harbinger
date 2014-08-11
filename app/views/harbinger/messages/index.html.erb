@@ -1,0 +1,24 @@
+<table>
+  <caption>Messages</caption>
+  <thead>
+    <tr>
+      <th>Created At</th>
+      <th>Contexts</th>
+      <th>State</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% messages.each do |message| %>
+    <tr class="message">
+      <td class="detail message-created-at-detail"><time><%= message.created_at %></time></td>
+      <td>
+        <ul><% message.contexts.each do |context| %>
+          <li class="detail message-contexts-detail"><%= context %></li>
+        <% end %></ul>
+      </td>
+      <td class="detail message-state-detail"><%= message.state %></td>
+      <td class="actions">&nbsp;</td>
+    <% end %>
+  </tbody>
+</table>
