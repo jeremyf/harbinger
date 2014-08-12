@@ -18,6 +18,18 @@ module Harbinger
         Then { expect(result).to be_an_instance_of(Reporters::UserReporter) }
       end
 
+      context 'implicit conversion of an exception' do
+        Given(:context) do
+          begin
+            {}.fetch(:missing_key)
+          rescue KeyError => exception
+            exception
+          end
+        end
+        When(:result) { described_class.find_for(context) }
+        Then { expect(result).to be_an_instance_of(Reporters::ExceptionReporter) }
+      end
+
       context 'constant that raises a name error' do
         Given(:context) { Class.new.new }
         When(:result) { described_class.find_for(context) }

@@ -47,10 +47,8 @@ module Harbinger
     end
 
     def default_database_storage
-      Class.new do
-        def self.store_message(message)
-        end
-      end
+      require 'harbinger/database_channel_message'
+      DatabaseChannelMessage
     end
 
     def __default_channels

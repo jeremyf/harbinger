@@ -5,6 +5,7 @@ module Harbinger
       if context.respond_to?(:to_harbinger_reporter)
         context.to_harbinger_reporter
       else
+        # @TODO - Handle inheritence; KeyError is not an Exception
         reporter_class_name = reporter_name_for_instance(context)
         if const_defined?(reporter_class_name)
           const_get(reporter_class_name).new(context)
@@ -17,7 +18,11 @@ module Harbinger
     end
 
     def reporter_name_for_instance(context)
-      context.class.to_s.gsub(/(?:^|_)([a-z])/) { $1.upcase } + "Reporter"
+      if context.is_a?(Exception)
+        "ExceptionReporter"
+      else
+        context.class.to_s.gsub(/(?:^|_)([a-z])/) { $1.upcase } + "Reporter"
+      end
     end
     private_class_method :reporter_name_for_instance
   end

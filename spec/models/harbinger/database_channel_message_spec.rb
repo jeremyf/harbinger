@@ -19,6 +19,11 @@ module Harbinger
       expect(subject.elements).to be_a_kind_of(ActiveRecord::Associations::CollectionProxy)
     end
 
+    context '.search' do
+      xit 'is paginated'
+      xit 'handles a query parameter'
+    end
+
     context '.store_message' do
       it 'creates a new instance' do
         expect { described_class.store_message(message) }.

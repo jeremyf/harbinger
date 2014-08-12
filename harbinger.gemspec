@@ -33,5 +33,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rails", "~> 4.0"
   spec.add_development_dependency 'sqlite3', '~> 1.3'
   spec.add_development_dependency 'database_cleaner', '~> 1.3'
+  spec.add_development_dependency 'capybara', '~> 2.4'
 
 end
