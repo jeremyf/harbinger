@@ -1,5 +1,6 @@
 require 'spec_fast_helper'
 require 'harbinger/configuration'
+require 'logger'
 
 module Harbinger
   describe Configuration do
@@ -7,7 +8,12 @@ module Harbinger
 
     context '#default_channels' do
       When { configuration.default_channels = [:logger, 'Database'] }
-      Then { expect(configuration.default_channels).to eq([:logger, :database])}
+      Then { expect(configuration.default_channels).to eq([:logger, :database]) }
+    end
+
+    context '#default_channels without assignment' do
+      When(:default_channels) { configuration.default_channels }
+      Then { expect(default_channels).to eq([:logger]) }
     end
 
     context '#logger' do
@@ -19,6 +25,13 @@ module Harbinger
         Given(:logger) { double('Logger', add: true) }
         When { configuration.logger = logger }
         Then { expect(configuration.logger).to eq(logger) }
+      end
+
+      context 'default logger without rails' do
+        Given { Object.send(:remove_const, :Rails) if defined?(Rails) }
+        When(:default_logger) { configuration.logger }
+        Then { expect(default_logger).to be_an_instance_of(Logger) }
+        And { expect(defined?(Rails)).to be_falsey }
       end
 
       context 'override without valid logger' do

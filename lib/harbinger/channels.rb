@@ -9,7 +9,7 @@ module Harbinger
         NullChannel
       end
     rescue StandardError
-      NullReporter
+      NullChannel
     end
 
     def channel_name_for_instance(channel_name)
