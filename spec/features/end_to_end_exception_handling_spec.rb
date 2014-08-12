@@ -12,12 +12,21 @@ module Harbinger
     end
 
     it 'sends the exception message to the database channel' do
-      expect { Harbinger.deliver(message, channels: :database) }.
-      to change { DatabaseChannelMessage.count }.
-      by(1)
+      expect(Harbinger.logger).to receive(:add).at_least(:once).and_call_original
+
+      expect { Harbinger.deliver(message, channels: [:database, :logger]) }.
+        to change { DatabaseChannelMessage.count }.
+        by(1)
+
+      message = DatabaseChannelMessage.last
 
       visit 'harbinger/messages'
+      page.find(:xpath, "//a[@href='#{harbinger.message_path(message.to_param)}']").click
 
+      expect(page.html).to have_tag('.message') do
+        with_tag('.message-contexts-detail', text: 'exception')
+        with_tag('.message-state-detail', text: 'new')
+      end
     end
   end
 end

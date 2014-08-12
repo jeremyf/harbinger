@@ -11,7 +11,7 @@
   <tbody>
     <% messages.each do |message| %>
     <tr class="message">
-      <td class="detail message-created-at-detail"><time><%= message.created_at %></time></td>
+      <td class="detail message-created-at-detail"><a href="<%= harbinger.message_path(message.to_param)%>"><time><%= message.created_at %></time></a></td>
       <td>
         <ul><% message.contexts.each do |context| %>
           <li class="detail message-contexts-detail"><%= context %></li>
