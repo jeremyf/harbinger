@@ -19,4 +19,7 @@ module Harbinger
   end
 end
 
+# Note: I am not requiring all of the channels for this Gem. Some
+# implementations my want to override the defaults. Look to
+# `lib/harbinger/engine.rb` for how things are required for Rails applications.
 require 'harbinger/channels/null_channel'
