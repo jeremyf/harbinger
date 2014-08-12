@@ -5,7 +5,7 @@ require 'spec_view_helper'
 # in the example context
 describe 'harbinger/messages/index.html.erb', type: :view do
   let(:created_at) { Time.now }
-  let(:messages) do
+  let(:message) do
     double(
       'Message',
       contexts: ['Hello','World'],
@@ -13,13 +13,15 @@ describe 'harbinger/messages/index.html.erb', type: :view do
       created_at: created_at
     )
   end
+  let(:harbinger) { double("Engine", message_path: true) }
   it 'renders the object and fieldsets' do
-    render template: "harbinger/messages/index.html.erb", locals: { messages: [messages] }
+    expect(harbinger).to receive(:message_path).with(message.to_param).and_return("/path/to/message")
+    render template: "harbinger/messages/index.html.erb", locals: { messages: [message], harbinger: harbinger }
     expect(rendered).to have_tag('.message') do
+      with_tag(".detail.message-created-at-detail a time", text: created_at.to_s)
       with_tag('.detail.message-contexts-detail', text: 'Hello')
       with_tag('.detail.message-contexts-detail', text: 'World')
       with_tag('.detail.message-state-detail', text: 'new')
-      with_tag('.detail.message-created-at-detail time', text: created_at.to_s)
     end
   end
 end
