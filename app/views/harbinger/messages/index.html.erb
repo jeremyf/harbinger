@@ -1,3 +1,22 @@
+<%= form_tag harbinger.messages_path, :method => :get, :class => "search-form" do %>
+  <fieldset>
+    <legend class="accessible-hidden">Search Messages</legend>
+    <%= label_tag :message_search, "Search Text", :class => "accessible-hidden" %>
+    <%= text_field_tag(
+      :q,
+      params[:q],
+      :class => "q search-query",
+      :id => "message_search",
+      :placeholder => "Search text of messages",
+      :size => "30",
+      :tabindex => "1",
+      :type => "search",
+    )%><button type="submit" class="search-submit btn btn-primary" id="keyword-search-submit" tabindex="2">
+      <i class="icon-search icon-white"></i><span class="accessible-hidden">Search</span>
+    </button>
+  </fieldset>
+<% end %>
+
 <table>
   <caption>Messages</caption>
   <thead>
