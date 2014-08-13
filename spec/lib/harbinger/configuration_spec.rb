@@ -27,13 +27,6 @@ module Harbinger
         Then { expect(configuration.logger).to eq(logger) }
       end
 
-      context 'default logger without rails' do
-        Given { Object.send(:remove_const, :Rails) if defined?(Rails) }
-        When(:default_logger) { configuration.logger }
-        Then { expect(default_logger).to be_an_instance_of(Logger) }
-        And { expect(defined?(Rails)).to be_falsey }
-      end
-
       context 'override without valid logger' do
         Given(:logger) { double('Logger') }
         Then { expect { configuration.logger = logger }.to raise_error(ConfigurationError) }
