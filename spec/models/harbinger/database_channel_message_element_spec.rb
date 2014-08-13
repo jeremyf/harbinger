@@ -7,6 +7,10 @@ module Harbinger
       it 'handles a query parameter' do
         expect(described_class.search_text('Hello').to_sql).to be_a(String)
       end
+
+      it 'wild card searches the value' do
+        expect(described_class.search_text('Hello').to_sql).to match(/%Hello%/)
+      end
     end
   end
 end

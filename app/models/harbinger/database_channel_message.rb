@@ -33,7 +33,7 @@ module Harbinger
     scope :search_text, ->(text) {
       if text
         where(
-          arel_table[:contexts].matches("#{text}*").
+          arel_table[:contexts].matches("#{text}%").
           or(
             arel_table[:id].
             in(Arel::SqlLiteral.new(DatabaseChannelMessageElement.search_text(text).select(:message_id).to_sql))

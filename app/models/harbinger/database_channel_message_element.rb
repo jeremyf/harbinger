@@ -9,7 +9,8 @@ module Harbinger
 
     scope :search_text, ->(text) {
       if text
-        where(arel_table[:value].matches("#{text}*"))
+        # Using %text% because I am serializing the data.
+        where(arel_table[:value].matches("%#{text}%"))
       else
         self
       end
