@@ -26,6 +26,15 @@ module Harbinger
         And { expect(result).to respond_to(:deliver) }
       end
 
+      context 'an exception happened' do
+        Given(:channel_name) { :test }
+        When(:result) do
+          expect(described_class).to receive(:channel_name_for_instance).and_raise(RuntimeError)
+          described_class.find_for(channel_name)
+        end
+        Then { expect(result).to eql(Channels::NullChannel) }
+      end
+
     end
   end
 end

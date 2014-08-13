@@ -1,5 +1,6 @@
 require 'spec_fast_helper'
 require 'harbinger/configuration'
+require 'logger'
 
 module Harbinger
   describe Configuration do
@@ -7,7 +8,12 @@ module Harbinger
 
     context '#default_channels' do
       When { configuration.default_channels = [:logger, 'Database'] }
-      Then { expect(configuration.default_channels).to eq([:logger, :database])}
+      Then { expect(configuration.default_channels).to eq([:logger, :database]) }
+    end
+
+    context '#default_channels without assignment' do
+      When(:default_channels) { configuration.default_channels }
+      Then { expect(default_channels).to eq([:logger]) }
     end
 
     context '#logger' do
