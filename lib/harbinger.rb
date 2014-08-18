@@ -20,6 +20,19 @@ module Harbinger
     yield(configuration)
   end
 
+  # Responsible for building a :message from the various :contexts and then
+  # delivering the :message to the appropriate :channels.
+  #
+  # @see .build_message
+  # @see .deliver_message
+  #
+  # @param [Hash] options
+  # @option options [Message] :message The message you want to amend.
+  #   If none is provided, then one is created.
+  # @option options [Object, Array<Object>] :contexts One or more Objects that
+  #   Harbinger will visit and extract message elements from.
+  # @option options [Symbol, Array<Symbol>] :channels One or more channels that
+  #   Harbinger will deliver the :message to
   def call(options)
     message = build_message(options)
     deliver_message(message, options)
