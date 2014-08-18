@@ -38,6 +38,15 @@ module Harbinger
     deliver_message(message, options)
   end
 
+  # Responsible for building a :message from the various :contexts.
+  #
+  # @see .call
+  #
+  # @param [Hash] options
+  # @option options [Message] :message The message you want to amend.
+  #   If none is provided, then one is created.
+  # @option options [Object, Array<Object>] :contexts One or more Objects that
+  #   Harbinger will visit and extract message elements from.
   def build_message(options = {})
     contexts = Array(options.fetch(:contexts)).flatten.compact
     message = options.fetch(:message) { default_message }
@@ -46,6 +55,15 @@ module Harbinger
     message
   end
 
+  # Responsible for delivering a :message to the appropriate :channels.
+  #
+  # @see .call
+  #
+  # @param message [Message] The message you want to amend.
+  #   If none is provided, then one is created.
+  # @param [Hash] options
+  # @option options [Symbol, Array<Symbol>] :channels One or more channels that
+  #   Harbinger will deliver the :message to
   def deliver_message(message, options = {})
     channels = options.fetch(:channels) { default_channels }
     Array(channels).flatten.compact.each do |channel_name|
