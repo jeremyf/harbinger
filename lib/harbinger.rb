@@ -6,16 +6,19 @@ require "harbinger/exceptions"
 require "harbinger/configuration"
 
 module Harbinger
-  module_function
   class << self
     attr_writer :configuration
 
+    # @see Configuration
     def configuration
       @configuration ||= Configuration.new
     end
   end
 
   module_function
+
+  # @see Configuration
+  # @see .configuration
   def configure
     yield(configuration)
   end
@@ -89,14 +92,17 @@ module Harbinger
   end
   private_class_method :channel_for
 
+  # @api protected
   def default_channels
     configuration.default_channels
   end
 
+  # @api protected
   def logger
     configuration.logger
   end
 
+  # @api protected
   def database_storage
     configuration.database_storage
   end
