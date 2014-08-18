@@ -4,19 +4,15 @@ require 'harbinger'
 module Harbinger
   describe 'handling a message', type: :feature do
     let(:message) do
-      begin
-        {}.fetch(:missing_key)
-      rescue KeyError => exception
-        Harbinger.build_message(contexts: [exception])
-      end
     end
 
     it 'sends the exception message to the database channel' do
       expect(Harbinger.logger).to receive(:add).at_least(:once).and_call_original
-
-      expect { Harbinger.deliver_message(message, channels: [:database, :logger]) }.
-        to change { DatabaseChannelMessage.count }.
-        by(1)
+      begin
+        {}.fetch(:missing_key)
+      rescue KeyError => exception
+        Harbinger.call(channels: [:database, :logger], contexts: [exception])
+      end
 
       message = DatabaseChannelMessage.last
 
