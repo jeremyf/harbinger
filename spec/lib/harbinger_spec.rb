@@ -15,30 +15,26 @@ describe Harbinger do
     Given(:channel) { double('Channel', deliver: true) }
     Given(:message) { Harbinger::Message.new }
     When { Harbinger.call(contexts: [user, request], message: message, channels: channel_name) }
-    Then { expect(message.attributes).to eq(
-             {
-               'user.username' => [user.username],
-               'request.path' => [request.path],
-               'request.params' => [request.params],
-               'request.user_agent' => [request.user_agent],
-             }
-           )
-           }
+    Then do expect(message.attributes).to eq(
+        'user.username' => [user.username],
+        'request.path' => [request.path],
+        'request.params' => [request.params],
+        'request.user_agent' => [request.user_agent]
+      )
+    end
     And { expect(channel).to have_received(:deliver).with(message) }
   end
 
   context '.build_message' do
     Given(:message) { Harbinger::Message.new }
     When { Harbinger.build_message(contexts: [user, request], message: message) }
-    Then { expect(message.attributes).to eq(
-             {
-               'user.username' => [user.username],
-               'request.path' => [request.path],
-               'request.params' => [request.params],
-               'request.user_agent' => [request.user_agent],
-             }
-           )
-           }
+    Then do expect(message.attributes).to eq(
+        'user.username' => [user.username],
+        'request.path' => [request.path],
+        'request.params' => [request.params],
+        'request.user_agent' => [request.user_agent]
+      )
+    end
   end
 
   context '.deliver_message' do
