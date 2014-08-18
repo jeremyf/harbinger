@@ -38,7 +38,10 @@ class PagesController
 end
 ```
 
-When we attempt to find the given page but an exception is raised then the above code will:
+Given the above Rails-like code
+When a user attempts to find a page that does not exist
+Then an exception is raised
+And the Harbinger.call code will:
 
 * Build a message based on the three reporters:
   * The raised exception
