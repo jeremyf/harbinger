@@ -7,14 +7,14 @@ module Harbinger
       begin
         {}.fetch(:missing_key)
       rescue KeyError => exception
-        Harbinger.call(contexts: [exception])
+        Harbinger.build_message(contexts: [exception])
       end
     end
 
     it 'sends the exception message to the database channel' do
       expect(Harbinger.logger).to receive(:add).at_least(:once).and_call_original
 
-      expect { Harbinger.deliver(message, channels: [:database, :logger]) }.
+      expect { Harbinger.deliver_message(message, channels: [:database, :logger]) }.
         to change { DatabaseChannelMessage.count }.
         by(1)
 
