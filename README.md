@@ -8,3 +8,48 @@
 [![APACHE 2 License](http://img.shields.io/badge/APACHE2-license-blue.svg)](./LICENSE)
 
 A Rails engine for arbitrary message creation and delivery.
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+    gem 'blorg'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install blorg
+
+## Usage
+
+```ruby
+class PagesController
+  def show
+    @page = Page.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => exception
+    Harbinger.call(
+      channels: [:database, :logger],
+      contexts: [exception, current_user, request]
+    )
+  end
+end
+```
+
+When we attempt to find the given page but an exception is raised then the above code will:
+
+* Build a message based on the three contexts:
+  * The raised exception
+  * The current user
+  * The request
+* Deliver that message to the two channels:
+  * Database
+  * Logger
+
+For further details I recommend delving into the [end to end exception handling spec](./spec/features/end_to_end_exception_handling_spec.rb)
+
+### Extending Contexts and Channels
+
+Harbinger is built to allow for easy creation of new Contexts and Channels.
