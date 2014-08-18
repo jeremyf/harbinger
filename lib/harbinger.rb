@@ -20,6 +20,11 @@ module Harbinger
     yield(configuration)
   end
 
+  def call(options)
+    message = build_message(options)
+    deliver_message(message, options)
+  end
+
   def build_message(options = {})
     contexts = Array(options.fetch(:contexts)).flatten.compact
     message = options.fetch(:message) { default_message }

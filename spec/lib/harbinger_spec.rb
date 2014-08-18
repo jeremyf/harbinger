@@ -4,7 +4,28 @@ require 'harbinger/message'
 
 describe Harbinger do
   Given(:user) { User.new(username: 'a username') }
-  Given(:request) { Request.new(path: '/path/to/awesome', params: {hello: :world}, user_agent: "Ruby") }
+  Given(:request) { Request.new(path: '/path/to/awesome', params: { hello: :world }, user_agent: "Ruby") }
+
+  context '.call' do
+    before(:each) do
+      expect(Harbinger::Channels).to receive(:find_for).with(channel_name).and_return(channel)
+    end
+    Given(:channel_name) { 'channel_double' }
+    Given(:channel_name) { 'channel_double' }
+    Given(:channel) { double('Channel', deliver: true) }
+    Given(:message) { Harbinger::Message.new }
+    When { Harbinger.call(contexts: [user, request], message: message, channels: channel_name) }
+    Then { expect(message.attributes).to eq(
+             {
+               'user.username' => [user.username],
+               'request.path' => [request.path],
+               'request.params' => [request.params],
+               'request.user_agent' => [request.user_agent],
+             }
+           )
+           }
+    And { expect(channel).to have_received(:deliver).with(message) }
+  end
 
   context '.build_message' do
     Given(:message) { Harbinger::Message.new }
