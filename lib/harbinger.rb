@@ -20,7 +20,12 @@ module Harbinger
     yield(configuration)
   end
 
-  def call(options = {})
+  def call(options)
+    message = build_message(options)
+    deliver_message(message, options)
+  end
+
+  def build_message(options = {})
     contexts = Array(options.fetch(:contexts)).flatten.compact
     message = options.fetch(:message) { default_message }
 
@@ -28,7 +33,7 @@ module Harbinger
     message
   end
 
-  def deliver(message, options = {})
+  def deliver_message(message, options = {})
     channels = options.fetch(:channels) { default_channels }
     Array(channels).flatten.compact.each do |channel_name|
       channel = channel_for(channel_name)
