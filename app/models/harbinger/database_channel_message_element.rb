@@ -7,7 +7,7 @@ module Harbinger
     belongs_to :message, class_name: 'Harbinger::DatabaseChannelMessage', foreign_key: :message_id
     serialize :value
 
-    scope :search_text, ->(text) {
+    scope :search_text, lambda { |text|
       if text
         # Using %text% because I am serializing the data.
         where(arel_table[:value].matches("%#{text}%"))

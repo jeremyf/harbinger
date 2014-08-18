@@ -30,7 +30,7 @@ module Harbinger
     end
 
     # Search the message and its elements for the matching text.
-    scope :search_text, ->(text) {
+    scope :search_text, lambda { |text|
       if text
         where(
           arel_table[:contexts].matches("#{text}%").
@@ -46,8 +46,6 @@ module Harbinger
 
     scope :search_state, ->(state) { state ? where(arel_table[:state].eq(state)) : all }
 
-    scope :ordered, -> do
-      order(arel_table[:created_at].desc)
-    end
+    scope :ordered, -> { order(arel_table[:created_at].desc) }
   end
 end
