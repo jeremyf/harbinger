@@ -32,8 +32,8 @@
     <tr class="message">
       <td class="detail message-created-at-detail"><a href="<%= harbinger.message_path(message.to_param)%>"><time><%= message.created_at %></time></a></td>
       <td>
-        <ul><% message.contexts.each do |context| %>
-          <li class="detail message-contexts-detail"><%= context %></li>
+        <ul><% message.reporters.each do |context| %>
+          <li class="detail message-reporters-detail"><%= context %></li>
         <% end %></ul>
       </td>
       <td class="detail message-state-detail"><%= message.state %></td>

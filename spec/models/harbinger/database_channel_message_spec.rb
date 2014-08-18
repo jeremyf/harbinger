@@ -57,10 +57,10 @@ module Harbinger
           by(3)
       end
 
-      it 'assigns :contexts' do
+      it 'assigns :reporters' do
         storage = described_class.new
         expect { described_class.store_message(message, storage) }.
-          to change { storage.attributes.values_at('contexts', 'state') }.
+          to change { storage.attributes.values_at('reporters', 'state') }.
           from([nil, nil]).to(['exception,user', 'new'])
       end
     end

@@ -12,7 +12,7 @@ module Harbinger
       @attributes[composite_key] << value
     end
 
-    def contexts
+    def reporters
       attributes.keys.collect { |key| key.split('.')[0] }.uniq
     end
 

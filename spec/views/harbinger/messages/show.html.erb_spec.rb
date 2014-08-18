@@ -10,7 +10,7 @@ describe 'harbinger/messages/show.html.erb', type: :view do
   let(:message) do
     double(
       'Message',
-      contexts: ['Hello','World'],
+      reporters: ['Hello','World'],
       state: 'new',
       created_at: created_at,
       elements: [netid_element, request_referrer_element]
@@ -20,9 +20,9 @@ describe 'harbinger/messages/show.html.erb', type: :view do
     render template: 'harbinger/messages/show',
       locals: { message: message }
     expect(rendered).to have_tag('article.message') do
-      with_tag('.term.message-contexts-term')
-      with_tag('.detail.message-contexts-detail', text: 'Hello')
-      with_tag('.detail.message-contexts-detail', text: 'World')
+      with_tag('.term.message-reporters-term')
+      with_tag('.detail.message-reporters-detail', text: 'Hello')
+      with_tag('.detail.message-reporters-detail', text: 'World')
       with_tag('.term.message-state-term')
       with_tag('.detail.message-state-detail', text: 'new')
       with_tag('.term.message-created-at-term')

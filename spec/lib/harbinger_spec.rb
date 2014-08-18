@@ -14,7 +14,7 @@ describe Harbinger do
     Given(:channel_name) { 'channel_double' }
     Given(:channel) { double('Channel', deliver: true) }
     Given(:message) { Harbinger::Message.new }
-    When { Harbinger.call(contexts: [user, request], message: message, channels: channel_name) }
+    When { Harbinger.call(reporters: [user, request], message: message, channels: channel_name) }
     Then do expect(message.attributes).to eq(
         'user.username' => [user.username],
         'request.path' => [request.path],
@@ -27,7 +27,7 @@ describe Harbinger do
 
   context '.build_message' do
     Given(:message) { Harbinger::Message.new }
-    When { Harbinger.build_message(contexts: [user, request], message: message) }
+    When { Harbinger.build_message(reporters: [user, request], message: message) }
     Then do expect(message.attributes).to eq(
         'user.username' => [user.username],
         'request.path' => [request.path],

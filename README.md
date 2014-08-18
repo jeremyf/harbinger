@@ -32,7 +32,7 @@ class PagesController
   rescue ActiveRecord::RecordNotFound => exception
     Harbinger.call(
       channels: [:database, :logger],
-      contexts: [exception, current_user, request]
+      reporters: [exception, current_user, request]
     )
   end
 end
@@ -40,7 +40,7 @@ end
 
 When we attempt to find the given page but an exception is raised then the above code will:
 
-* Build a message based on the three contexts:
+* Build a message based on the three reporters:
   * The raised exception
   * The current user
   * The request

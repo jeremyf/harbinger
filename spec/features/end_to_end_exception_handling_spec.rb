@@ -11,7 +11,7 @@ module Harbinger
       begin
         {}.fetch(:missing_key)
       rescue KeyError => exception
-        Harbinger.call(channels: [:database, :logger], contexts: [exception])
+        Harbinger.call(channels: [:database, :logger], reporters: [exception])
       end
 
       message = DatabaseChannelMessage.last
@@ -27,7 +27,7 @@ module Harbinger
       page.find(:xpath, "//a[@href='#{harbinger.message_path(message.to_param)}']").click
 
       expect(page.html).to have_tag('.message') do
-        with_tag('.message-contexts-detail', text: 'exception')
+        with_tag('.message-reporters-detail', text: 'exception')
         with_tag('.message-state-detail', text: 'new')
       end
     end

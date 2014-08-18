@@ -23,7 +23,7 @@ module Harbinger
     yield(configuration)
   end
 
-  # Responsible for building a :message from the various :contexts and then
+  # Responsible for building a :message from the various :reporters and then
   # delivering the :message to the appropriate :channels.
   #
   # @see .build_message
@@ -32,7 +32,7 @@ module Harbinger
   # @param [Hash] options
   # @option options [Message] :message The message you want to amend.
   #   If none is provided, then one is created.
-  # @option options [Object, Array<Object>] :contexts One or more Objects that
+  # @option options [Object, Array<Object>] :reporters One or more Objects that
   #   Harbinger will visit and extract message elements from.
   # @option options [Symbol, Array<Symbol>] :channels One or more channels that
   #   Harbinger will deliver the :message to
@@ -41,20 +41,20 @@ module Harbinger
     deliver_message(message, options)
   end
 
-  # Responsible for building a :message from the various :contexts.
+  # Responsible for building a :message from the various :reporters.
   #
   # @see .call
   #
   # @param [Hash] options
   # @option options [Message] :message The message you want to amend.
   #   If none is provided, then one is created.
-  # @option options [Object, Array<Object>] :contexts One or more Objects that
+  # @option options [Object, Array<Object>] :reporters One or more Objects that
   #   Harbinger will visit and extract message elements from.
   def build_message(options = {})
-    contexts = Array(options.fetch(:contexts)).flatten.compact
+    reporters = Array(options.fetch(:reporters)).flatten.compact
     message = options.fetch(:message) { default_message }
 
-    contexts.each { |context| reporter_for(context).accept(message) }
+    reporters.each { |context| reporter_for(context).accept(message) }
     message
   end
 

@@ -8,7 +8,7 @@ describe 'harbinger/messages/index.html.erb', type: :view do
   let(:message) do
     double(
       'Message',
-      contexts: ['Hello','World'],
+      reporters: ['Hello','World'],
       state: 'new',
       created_at: created_at
     )
@@ -23,8 +23,8 @@ describe 'harbinger/messages/index.html.erb', type: :view do
 
     expect(rendered).to have_tag('.message') do
       with_tag(".detail.message-created-at-detail a time", text: created_at.to_s)
-      with_tag('.detail.message-contexts-detail', text: 'Hello')
-      with_tag('.detail.message-contexts-detail', text: 'World')
+      with_tag('.detail.message-reporters-detail', text: 'Hello')
+      with_tag('.detail.message-reporters-detail', text: 'World')
       with_tag('.detail.message-state-detail', text: 'new')
     end
   end

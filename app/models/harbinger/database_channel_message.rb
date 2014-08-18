@@ -6,16 +6,16 @@ module Harbinger
     self.table_name = 'harbinger_messages'
     has_many :elements, class_name: 'Harbinger::DatabaseChannelMessageElement', foreign_key: :message_id
 
-    def contexts=(values)
+    def reporters=(values)
       super(Array.wrap(values).join(','))
     end
 
-    def contexts
+    def reporters
       super.split(',')
     end
 
     def self.store_message(message, storage = new)
-      storage.contexts = message.contexts
+      storage.reporters = message.reporters
       storage.state = 'new'
       message.attributes.each do |key, value|
         storage.elements.build(key: key, value: value)
@@ -33,7 +33,7 @@ module Harbinger
     scope :search_text, lambda { |text|
       if text
         where(
-          arel_table[:contexts].matches("#{text}%").
+          arel_table[:reporters].matches("#{text}%").
           or(
             arel_table[:id].
             in(Arel::SqlLiteral.new(DatabaseChannelMessageElement.search_text(text).select(:message_id).to_sql))
