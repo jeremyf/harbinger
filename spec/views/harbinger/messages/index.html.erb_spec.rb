@@ -13,10 +13,14 @@ describe 'harbinger/messages/index.html.erb', type: :view do
       created_at: created_at
     )
   end
-  let(:harbinger) { double("Engine", message_path: true) }
+  let(:harbinger) { double("Engine", message_path: true, messages_path: '/messages/') }
   it 'renders the object and fieldsets' do
-    expect(harbinger).to receive(:message_path).with(message.to_param).and_return("/path/to/message")
+    expect(harbinger).to receive(:message_path).with(message.to_param).and_return("/messages/#{message.to_param}")
     render template: "harbinger/messages/index.html.erb", locals: { messages: [message], harbinger: harbinger }
+    expect(rendered).to have_tag('.search-form') do
+      with_tag('input.q.search-query', with: { type: 'search', name: 'q' } )
+    end
+
     expect(rendered).to have_tag('.message') do
       with_tag(".detail.message-created-at-detail a time", text: created_at.to_s)
       with_tag('.detail.message-contexts-detail', text: 'Hello')

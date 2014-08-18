@@ -21,6 +21,13 @@ module Harbinger
       message = DatabaseChannelMessage.last
 
       visit 'harbinger/messages'
+
+      # Search page
+      page.within('.search-form') do
+        page.fill_in('Search Text', with: 'KeyError')
+        page.click_button('Search')
+      end
+
       page.find(:xpath, "//a[@href='#{harbinger.message_path(message.to_param)}']").click
 
       expect(page.html).to have_tag('.message') do

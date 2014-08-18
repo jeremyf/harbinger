@@ -19,9 +19,28 @@ module Harbinger
       expect(subject.elements).to be_a_kind_of(ActiveRecord::Associations::CollectionProxy)
     end
 
+    context '.ordered' do
+      it 'should evaluate to sql' do
+        expect(described_class.ordered.to_sql).to be_a(String)
+      end
+    end
+
+    context '.search_state' do
+      it 'should evaluate to sql' do
+        expect(described_class.search_state('new').to_sql).to be_a(String)
+      end
+    end
+
+    context '.search_text' do
+      it 'should evaluate to sql' do
+        expect(described_class.search_text('my-text').to_sql).to be_a(String)
+      end
+    end
+
     context '.search' do
-      xit 'is paginated'
-      xit 'handles a query parameter'
+      it 'handles a query parameter' do
+        expect(described_class.search(q: 'Hello', state: 'new').to_sql).to be_a(String)
+      end
     end
 
     context '.store_message' do

@@ -24,7 +24,28 @@ module Harbinger
     end
 
     def self.search(params = {})
-      all
+      search_text(params[:q]).
+        search_state(params[:state]).
+        ordered
     end
+
+    # Search the message and its elements for the matching text.
+    scope :search_text, lambda { |text|
+      if text
+        where(
+          arel_table[:contexts].matches("#{text}%").
+          or(
+            arel_table[:id].
+            in(Arel::SqlLiteral.new(DatabaseChannelMessageElement.search_text(text).select(:message_id).to_sql))
+          )
+        )
+      else
+        all
+      end
+    }
+
+    scope :search_state, ->(state) { state ? where(arel_table[:state].eq(state)) : all }
+
+    scope :ordered, -> { order(arel_table[:created_at].desc) }
   end
 end
