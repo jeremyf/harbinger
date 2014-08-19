@@ -13,6 +13,7 @@ describe 'harbinger/messages/show.html.erb', type: :view do
       reporters: ['Hello','World'],
       state: 'new',
       created_at: created_at,
+      message_object_id: '123456',
       elements: [netid_element, request_referrer_element]
     )
   end
@@ -23,6 +24,8 @@ describe 'harbinger/messages/show.html.erb', type: :view do
       with_tag('.term.message-reporters-term')
       with_tag('.detail.message-reporters-detail', text: 'Hello')
       with_tag('.detail.message-reporters-detail', text: 'World')
+      with_tag('.term.message-object-id-term')
+      with_tag('.detail.message-object-id-detail', text: '123456')
       with_tag('.term.message-state-term')
       with_tag('.detail.message-state-detail', text: 'new')
       with_tag('.term.message-created-at-term')

@@ -2,14 +2,16 @@
   <header class="message-header">
     <h2>Message</h2>
     <dl>
+      <dt class="term message-created-at-term">Created at</dt>
+      <dd class="detail message-created-at-detail"><time><%= message.created_at %></time></dd>
+      <dt class="term message-object-id-term">Message Object ID</dt>
+      <dd class="detail message-object-id-detail"><%= message.message_object_id %></dd>
       <dt class="term message-reporters-term">Contexts</dt>
       <% message.reporters.each do |context| %>
       <dd class="detail message-reporters-detail"><%= context %></dd>
       <% end %>
       <dt class="term message-state-term">State</dt>
       <dd class="detail message-state-detail"><%= message.state %></dd>
-      <dt class="term message-created-at-term">Created at</dt>
-      <dd class="detail message-created-at-detail"><time><%= message.created_at %></time></dd>
     </dl>
   </header>
   <section class="message-body">
