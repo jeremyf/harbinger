@@ -1,3 +1,5 @@
+require "kaminari"
+
 module Harbinger
   class Engine < ::Rails::Engine
     engine_name 'harbinger'
