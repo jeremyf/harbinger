@@ -12,7 +12,7 @@ module Harbinger
     protected
 
     def messages
-      @messages ||= DatabaseChannelMessage.search(q: params[:q])
+      @messages ||= DatabaseChannelMessage.page(params[:page]).search(q: params[:q])
     end
 
     def message
