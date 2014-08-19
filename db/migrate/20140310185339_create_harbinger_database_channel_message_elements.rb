@@ -9,6 +9,5 @@ class CreateHarbingerDatabaseChannelMessageElements < ActiveRecord::Migration
     add_index :harbinger_message_elements, :message_id
     add_index :harbinger_message_elements, :key
     add_index :harbinger_message_elements, [:message_id, :key]
-    add_index :harbinger_message_elements, [:message_id, :value]
   end
 end
