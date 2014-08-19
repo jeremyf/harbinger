@@ -21,7 +21,7 @@ module Harbinger
       if context.is_a?(Exception)
         "ExceptionReporter"
       else
-        context.class.to_s.gsub(/(?:^|_)([a-z])/) { $1.upcase } + "Reporter"
+        context.class.to_s.split('::').last.gsub(/(?:^|_)([a-z])/) { $1.upcase } + "Reporter"
       end
     end
     private_class_method :reporter_name_for_instance

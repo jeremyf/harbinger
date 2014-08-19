@@ -2,6 +2,8 @@ require 'spec_fast_helper'
 require 'harbinger/reporters'
 
 module Harbinger
+  class Request
+  end
   describe Reporters do
     context '.find_for' do
       Given(:reporter) { double('Reporter') }
@@ -40,6 +42,12 @@ module Harbinger
         Given(:context) { Object.new }
         When(:result) { described_class.find_for(context) }
         Then { expect(result).to be_an_instance_of(Reporters::NullReporter) }
+      end
+
+      context 'module conversion' do
+        Given(:context) { ::Harbinger::Request.new }
+        When(:result) { described_class.find_for(context) }
+        Then { expect(result).to be_an_instance_of(Reporters::RequestReporter) }
       end
     end
   end
