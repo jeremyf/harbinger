@@ -10,7 +10,8 @@ describe 'harbinger/messages/index.html.erb', type: :view do
       'Message',
       reporters: ['Hello','World'],
       state: 'new',
-      created_at: created_at
+      created_at: created_at,
+      message_object_id: '123456'
     )
   end
   let(:harbinger) { double("Engine", message_path: true, messages_path: '/messages/') }
@@ -23,6 +24,7 @@ describe 'harbinger/messages/index.html.erb', type: :view do
 
     expect(rendered).to have_tag('.message') do
       with_tag(".detail.message-created-at-detail a time", text: created_at.to_s)
+      with_tag('.detail.message-object-id-detail', text: message.message_object_id)
       with_tag('.detail.message-reporters-detail', text: 'Hello')
       with_tag('.detail.message-reporters-detail', text: 'World')
       with_tag('.detail.message-state-detail', text: 'new')

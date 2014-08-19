@@ -17,6 +17,7 @@ module Harbinger
     def self.store_message(message, storage = new)
       storage.reporters = message.reporters
       storage.state = 'new'
+      storage.message_object_id = message.object_id
       message.attributes.each do |key, value|
         storage.elements.build(key: key, value: value)
       end
@@ -35,8 +36,11 @@ module Harbinger
         where(
           arel_table[:reporters].matches("#{text}%").
           or(
-            arel_table[:id].
-            in(Arel::SqlLiteral.new(DatabaseChannelMessageElement.search_text(text).select(:message_id).to_sql))
+            arel_table[:message_object_id].eq(text).
+            or(
+              arel_table[:id].
+              in(Arel::SqlLiteral.new(DatabaseChannelMessageElement.search_text(text).select(:message_id).to_sql))
+            )
           )
         )
       else
