@@ -5,7 +5,7 @@ module Harbinger
       private :method_names
       def initialize(request, config = {})
         @request = request
-        @method_names = config.fetch(:method_names) { ['path', 'params', 'user_agent'] }
+        @method_names = config.fetch(:method_names) { ['path', 'user_agent'] }
       end
 
       def accept(message)
