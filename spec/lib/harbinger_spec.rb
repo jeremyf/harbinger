@@ -18,7 +18,6 @@ describe Harbinger do
     Then do expect(message.attributes).to eq(
         'user.username' => [user.username],
         'request.path' => [request.path],
-        'request.params' => [request.params],
         'request.user_agent' => [request.user_agent]
       )
     end
@@ -31,7 +30,6 @@ describe Harbinger do
     Then do expect(message.attributes).to eq(
         'user.username' => [user.username],
         'request.path' => [request.path],
-        'request.params' => [request.params],
         'request.user_agent' => [request.user_agent]
       )
     end

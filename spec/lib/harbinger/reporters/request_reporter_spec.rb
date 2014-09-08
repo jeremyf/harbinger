@@ -15,7 +15,6 @@ module Harbinger::Reporters
 
       When { reporter.accept(message) }
       Then { expect(message).to have_received(:append).with('request', 'path', request.path) }
-      And { expect(message).to have_received(:append).with('request', 'params', request.params) }
       And { expect(message).to have_received(:append).with('request', 'user_agent', request.user_agent) }
 
     end
