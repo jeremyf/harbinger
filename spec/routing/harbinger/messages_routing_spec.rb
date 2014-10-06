@@ -12,5 +12,13 @@ module Harbinger
       expect(message_path('1')).to eq('/harbinger/messages/1')
     end
 
+    it 'should route actions based on namespace' do
+      expect(
+        url_for(
+          { action: "index", controller: "harbinger/messages", page: nil, only_path: true }
+        )
+      ).to eq('/harbinger/messages')
+    end
+
   end
 end
