@@ -107,4 +107,19 @@ module Harbinger
     configuration.database_storage
   end
 
+
+  # As per an isolated_namespace Rails engine.
+  # But the isolated namespace creates issues.
+  # @api private
+  def table_name_prefix
+    'harbinger_'
+  end
+
+  # Because I am not using isolate_namespace for Orcid::Engine
+  # I need this for the application router to find the appropriate routes.
+  # @api private
+  def use_relative_model_naming?
+    true
+  end
+
 end

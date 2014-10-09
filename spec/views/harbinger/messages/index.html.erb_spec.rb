@@ -16,7 +16,7 @@ describe 'harbinger/messages/index.html.erb', type: :view do
   end
   let(:harbinger) { double("Engine", message_path: true, messages_path: '/messages/') }
   it 'renders the object and fieldsets' do
-    expect(view).to receive(:paginate).with([message])
+    expect(view).to_not receive(:paginate).with([message])
     expect(harbinger).to receive(:message_path).with(message.to_param).and_return("/messages/#{message.to_param}")
     render template: "harbinger/messages/index.html.erb", locals: { messages: [message], harbinger: harbinger }
     expect(rendered).to have_tag('.search-form') do
